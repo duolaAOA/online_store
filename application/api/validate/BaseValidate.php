@@ -4,7 +4,10 @@
 namespace app\api\validate;
 
 
+
+use think\Request;
 use think\Validate;
+use app\lib\exception\ValidateException;
 
 class BaseValidate extends Validate
 {

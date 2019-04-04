@@ -12,4 +12,31 @@
 //动态配置
 use think\Route;
 
-Route::get('banner/:id', 'api/v1.Banner/getBanner');
+//Route::get('banner/:id', 'api/v1.Banner/getBanner');
+
+Route::get('api/:version/banner/:id','api/:version.Banner/getBanner');
+//所有专题
+Route::get('api/:version/theme','api/:version.Theme/getSimpleList');
+//专题详情
+Route::get('api/:version/theme/:id','api/:version.Theme/getComplexOne');
+//商品 - 路由分组
+Route::group('api/:version/product',function(){//参数二是闭包函数
+    //分类中的商品
+    Route::get('/by_category','api/:version.Product/getAllInCategory');
+    //商品详情
+    Route::get('/:id','api/:version.Product/getOne',[],['id' => '\d+']);
+    //最近新品
+    Route::get('/recent','api/:version.Product/getRecent');
+});
+//所有分类
+Route::get('api/:version/category/all','api/:version.Category/getAllCategories');
+//
+Route::post('api/:version/token/user','api/:version.Token/getToken');
+//创建或者更新地址
+Route::post('api/:version/address','api/:version.Address/createOrUpdateAddress');
+//下单
+Route::post('api/:version/order','api/:version.Order/placeOrder');
+Route::get('api/:version/order/by_user', 'api/:version.Order/getSummaryByUser');
+Route::get('api/:version/order/:id', 'api/:version.Order/getDetail',[], ['id'=>'\d+']);
+Route::post('api/:version/pay/pre_order','api/:version.Pay/getPreOrder');
+Route::post('api/:version/pay/notify', 'api/:version.Pay/receiveNotify');
